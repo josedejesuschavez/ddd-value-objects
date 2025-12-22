@@ -1,1 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
+[project]
+name = "ddd-value-objects"
+version = "0.1.0"  # ¡Recuerda incrementarlo para cada release!
+authors = [
+  {name = "Tu Nombre", email = "tu.email@example.com"},
+]
+description = "Una implementación de Value Objects para Domain-Driven Design."
+readme = "README.md"
+license = {text = "MIT"}  # O la licencia que uses
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]

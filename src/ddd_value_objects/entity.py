@@ -1,4 +1,4 @@
-from uuid_value_object import UuidValueObject
+from .uuid_value_object import UuidValueObject
 
 
 class Entity:

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic, Optional
 
-from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
+from .invalid_argument_error import InvalidArgumentError
 
 Primitives = TypeVar('Primitives', int, str, float, bool)
 

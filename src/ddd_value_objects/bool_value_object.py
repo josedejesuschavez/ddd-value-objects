@@ -1,4 +1,4 @@
-from value_object import ValueObject
+from .value_object import ValueObject
 
 
 class BoolValueObject(ValueObject[bool]):

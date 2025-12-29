@@ -1,6 +1,6 @@
 import uuid
 
-from invalid_argument_error import InvalidArgumentError
+from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
 from value_object import ValueObject
 
 

@@ -1,4 +1,4 @@
-from value_object import ValueObject
+from src.ddd_value_objects.value_object import ValueObject
 
 
 class StringValueObject(ValueObject[str]):

@@ -5,6 +5,7 @@ Una colección de clases base para implementar Objetos de Valor (Value Objects) 
 ## Características
 
 - Clases base para Objetos de Valor de tipos primitivos (`String`, `Int`, `Float`, `Bool`).
+- Soporte para tipos de datos temporales (`DateTime`, `Date`).
 - Soporte para `UuidValueObject` con validación integrada.
 - Clase base para `Entity` con identificación basada en UUID.
 - Tipado fuerte y validación de nulidad por defecto.
@@ -59,6 +60,18 @@ Especialmente útil para identificadores:
 from ddd_value_objects.uuid_value_object import UuidValueObject
 
 user_id = UuidValueObject("550e8400-e29b-41d4-a716-446655440000")
+```
+
+### Objetos de Valor Temporales
+
+Para manejar fechas y horas usando tipos primitivos (`int` para timestamps):
+
+```python
+from ddd_value_objects import DateTimeValueObject, DateValueObject
+
+# Ambos usan int (Unix Timestamp)
+registration = UserRegistrationDate(1698412200) # DateTime
+birth = UserBirthDate(631152000)               # Date (1990-01-01)
 ```
 
 ### Entidades (Entities)

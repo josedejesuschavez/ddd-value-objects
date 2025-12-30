@@ -1,6 +1,8 @@
 import pytest
+
 from src.ddd_value_objects.date_time_value_object import DateTimeValueObject
 from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
+
 
 def test_date_time_value_object():
     ts = 1698412200

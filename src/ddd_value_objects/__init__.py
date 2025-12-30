@@ -8,6 +8,7 @@ from .date_time_value_object import DateTimeValueObject
 from .date_value_object import DateValueObject
 from .positive_int_value_object import PositiveIntValueObject
 from .positive_float_value_object import PositiveFloatValueObject
+from .email_value_object import EmailValueObject
 from .entity import Entity
 from .invalid_argument_error import InvalidArgumentError
 
@@ -22,6 +23,7 @@ __all__ = [
     "DateValueObject",
     "PositiveIntValueObject",
     "PositiveFloatValueObject",
+    "EmailValueObject",
     "Entity",
     "InvalidArgumentError",
 ]

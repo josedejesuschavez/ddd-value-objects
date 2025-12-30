@@ -7,7 +7,8 @@ Una colección de clases base para implementar Objetos de Valor (Value Objects) 
 - Clases base para Objetos de Valor de tipos primitivos (`String`, `Int`, `Float`, `Bool`).
 - Soporte para valores numéricos positivos (`PositiveInt`, `PositiveFloat`).
 - Soporte para tipos de datos temporales (`DateTime`, `Date`).
-- Soporte para `UuidValueObject` con validación integrada.
+- Soporte para `UuidValueObject`, `EmailValueObject` y `PhoneNumberValueObject`.
+- Objeto compuesto `MoneyValueObject` (cantidad + moneda ISO 4217).
 - Clase base para `Entity` con identificación basada en UUID.
 - Tipado fuerte y validación de nulidad por defecto.
 - Comparación de igualdad estructural para Objetos de Valor e igualdad de identidad para Entidades.

@@ -27,4 +27,4 @@ def test_country_code_value_object_invalid():
 
 def test_country_code_value_object_repr():
     vo = CountryCodeValueObject("ES")
-    assert repr(vo) == "StringValueObject(value='ES')"
+    assert repr(vo) == "CountryCodeValueObject(value='ES')"

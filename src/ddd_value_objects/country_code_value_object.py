@@ -18,3 +18,6 @@ class CountryCodeValueObject(StringValueObject):
             raise InvalidArgumentError(
                 f"'{value}' is not a valid ISO 3166-1 alpha-2 country code"
             )
+
+    def __repr__(self):
+        return f"CountryCodeValueObject(value='{self.value}')"

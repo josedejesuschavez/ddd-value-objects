@@ -13,6 +13,7 @@ from .phone_number_value_object import PhoneNumberValueObject
 from .currency_value_object import CurrencyValueObject
 from .country_code_value_object import CountryCodeValueObject
 from .url_value_object import UrlValueObject
+from .ip_address_value_object import IpAddressValueObject
 from .money_value_object import MoneyValueObject
 from .entity import Entity
 from .invalid_argument_error import InvalidArgumentError
@@ -33,6 +34,7 @@ __all__ = [
     "CurrencyValueObject",
     "CountryCodeValueObject",
     "UrlValueObject",
+    "IpAddressValueObject",
     "MoneyValueObject",
     "Entity",
     "InvalidArgumentError",

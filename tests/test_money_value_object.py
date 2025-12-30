@@ -28,3 +28,22 @@ def test_money_value_object_equality():
     
     assert not vo1.equals(vo2)
     assert not vo1.equals(vo3)
+
+def test_money_value_object_add():
+    m1 = MoneyValueObject(100, "USD")
+    m2 = MoneyValueObject(50, "USD")
+    
+    result = m1.add(m2)
+    
+    assert result.amount == 150
+    assert result.currency == "USD"
+    assert isinstance(result, MoneyValueObject)
+    assert result is not m1
+    assert result is not m2
+
+def test_money_value_object_add_different_currencies():
+    m1 = MoneyValueObject(100, "USD")
+    m2 = MoneyValueObject(50, "EUR")
+    
+    with pytest.raises(InvalidArgumentError, match="Cannot add money with different currencies"):
+        m1.add(m2)

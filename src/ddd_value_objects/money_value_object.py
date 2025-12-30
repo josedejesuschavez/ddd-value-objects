@@ -1,22 +1,33 @@
+from .composite_value_object import CompositeValueObject
 from .positive_float_value_object import PositiveFloatValueObject
 from .currency_value_object import CurrencyValueObject
+from .invalid_argument_error import InvalidArgumentError
 
 
-class MoneyValueObject:
+class MoneyValueObject(CompositeValueObject[dict]):
 
     def __init__(self, amount: float, currency: str):
-        self._amount = PositiveFloatValueObject(amount)
-        self._currency = CurrencyValueObject(currency)
+        self._amount_vo = PositiveFloatValueObject(amount)
+        self._currency_vo = CurrencyValueObject(currency)
+        super().__init__({
+            'amount': self._amount_vo.value,
+            'currency': self._currency_vo.value
+        })
 
     @property
     def amount(self) -> float:
-        return self._amount.value
+        return self._amount_vo.value
 
     @property
     def currency(self) -> str:
-        return self._currency.value
+        return self._currency_vo.value
 
-    def equals(self, other: 'MoneyValueObject') -> bool:
+    def add(self, other: 'MoneyValueObject') -> 'MoneyValueObject':
+        if self.currency != other.currency:
+            raise InvalidArgumentError("Cannot add money with different currencies")
+        return MoneyValueObject(self.amount + other.amount, self.currency)
+
+    def equals(self, other: 'CompositeValueObject') -> bool:
         if not isinstance(other, MoneyValueObject):
             return False
         return (self.amount == other.amount and 

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Optional
+from typing import TypeVar, Generic, Optional, Any
 
 from .invalid_argument_error import InvalidArgumentError
 
@@ -12,7 +12,6 @@ class ValueObject(ABC, Generic[Primitives]):
         self._value = value
         self._ensure_value_is_defined(value)
 
-    @abstractmethod
     def equals(self, other: 'ValueObject[Primitives]') -> bool:
         return other.__class__ == self.__class__ and other.value == self._value
 

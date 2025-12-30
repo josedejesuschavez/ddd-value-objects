@@ -1,6 +1,6 @@
 from typing import List
 
-from .value_object import ValueObject, Primitives
+from .value_object import ValueObject
 from .invalid_argument_error import InvalidArgumentError
 
 

@@ -1,4 +1,5 @@
 from .value_object import ValueObject
+from .composite_value_object import CompositeValueObject
 from .string_value_object import StringValueObject
 from .int_value_object import IntValueObject
 from .float_value_object import FloatValueObject
@@ -21,6 +22,7 @@ from .invalid_argument_error import InvalidArgumentError
 
 __all__ = [
     "ValueObject",
+    "CompositeValueObject",
     "StringValueObject",
     "IntValueObject",
     "FloatValueObject",

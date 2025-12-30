@@ -10,6 +10,7 @@ def test_uuid_value_object():
     
     assert vo1.value == valid_uuid
     assert vo1.equals(vo2)
+    assert not vo1.equals(valid_uuid)
     assert repr(vo1) == f"UuidValueObject(value='{valid_uuid}')"
 
 def test_uuid_value_object_invalid():

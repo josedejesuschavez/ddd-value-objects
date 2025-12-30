@@ -32,6 +32,7 @@ def test_enum_value_object_equality():
     vo3 = ColorValueObject("green")
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals(StringValueObject("blue"))
 
 def test_enum_value_object_repr():
     vo = ColorValueObject("red")

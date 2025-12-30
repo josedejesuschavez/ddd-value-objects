@@ -29,3 +29,22 @@ def test_value_object_equality():
     
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    
+    # Test __eq__
+    assert vo1 == vo2
+    assert vo1 != vo3
+    assert vo1 != "not a value object"
+    assert vo1 != None
+
+def test_value_object_hash():
+    vo1 = MockValueObject(10)
+    vo2 = MockValueObject(10)
+    vo3 = MockValueObject(20)
+    
+    assert hash(vo1) == hash(vo2)
+    assert hash(vo1) != hash(vo3)
+
+def test_invalid_argument_error_str_repr():
+    err = InvalidArgumentError("Test message", {"param": "value"})
+    assert str(err) == "Test message {'param': 'value'}"
+    assert repr(err) == "InvalidArgumentError(message='Test message', params={'param': 'value'})"

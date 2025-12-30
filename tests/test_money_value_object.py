@@ -22,12 +22,14 @@ def test_money_value_object_invalid_currency():
         MoneyValueObject(100.0, "us dollars")
 
 def test_money_value_object_equality():
+    from src.ddd_value_objects import StringValueObject
     vo1 = MoneyValueObject(100, "USD")
     vo2 = MoneyValueObject(100, "EUR")
     vo3 = MoneyValueObject(50, "USD")
     
     assert not vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals(StringValueObject("test"))
 
 def test_money_value_object_add():
     m1 = MoneyValueObject(100, "USD")

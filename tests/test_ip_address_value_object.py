@@ -11,6 +11,7 @@ def test_ip_address_value_object_ipv4():
     assert vo1.value == ipv4
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals(ipv4)
     assert repr(vo1) == f"IpAddressValueObject(value='{ipv4}')"
 
 def test_ip_address_value_object_ipv6():

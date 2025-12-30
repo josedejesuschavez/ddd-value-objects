@@ -13,6 +13,7 @@ def test_date_time_value_object():
     assert vo1.value == ts
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals("not a vo")
     assert repr(vo1) == f"DateTimeValueObject(value={ts})"
 
 def test_date_time_value_object_invalid():

@@ -11,6 +11,7 @@ def test_date_value_object():
     assert vo1.value == ts
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals(None)
     assert repr(vo1) == f"DateValueObject(value={ts})"
 
 def test_date_value_object_invalid():

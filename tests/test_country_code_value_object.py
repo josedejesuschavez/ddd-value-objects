@@ -18,6 +18,7 @@ def test_country_code_value_object_equality():
     
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals("ES")
 
 def test_country_code_value_object_invalid():
     invalid_codes = ["USA", "es", "E1", " ", "E", ""]

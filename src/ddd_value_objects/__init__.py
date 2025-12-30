@@ -10,6 +10,8 @@ from .positive_int_value_object import PositiveIntValueObject
 from .positive_float_value_object import PositiveFloatValueObject
 from .email_value_object import EmailValueObject
 from .phone_number_value_object import PhoneNumberValueObject
+from .currency_value_object import CurrencyValueObject
+from .money_value_object import MoneyValueObject
 from .entity import Entity
 from .invalid_argument_error import InvalidArgumentError
 
@@ -26,6 +28,8 @@ __all__ = [
     "PositiveFloatValueObject",
     "EmailValueObject",
     "PhoneNumberValueObject",
+    "CurrencyValueObject",
+    "MoneyValueObject",
     "Entity",
     "InvalidArgumentError",
 ]

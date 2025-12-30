@@ -3,4 +3,3 @@
 .python-version
 __pycache__
 *.egg-info/
-uv.lock

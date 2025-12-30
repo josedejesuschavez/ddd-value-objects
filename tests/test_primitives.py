@@ -38,8 +38,10 @@ def test_bool_value_object():
     vo1 = BoolValueObject(True)
     vo2 = BoolValueObject(True)
     vo3 = BoolValueObject(False)
+    vo4 = StringValueObject("True")
     
     assert vo1.value is True
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
+    assert not vo1.equals(vo4)
     assert repr(vo1) == "BoolValueObject(value=True)"

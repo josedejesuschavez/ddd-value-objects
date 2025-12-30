@@ -3,7 +3,9 @@ from typing import TypeVar, Generic, Optional
 
 from .invalid_argument_error import InvalidArgumentError
 
+
 Primitives = TypeVar('Primitives', int, str, float, bool)
+
 
 class ValueObject(ABC, Generic[Primitives]):
     def __init__(self, value: Primitives):

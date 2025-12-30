@@ -14,6 +14,14 @@ class ValueObject(ABC, Generic[Primitives]):
     def equals(self, other: 'ValueObject[Primitives]') -> bool:
         return other.__class__ == self.__class__ and other.value == self._value
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ValueObject):
+            return False
+        return self.equals(other)
+
+    def __hash__(self) -> int:
+        return hash((self.__class__, self._value))
+
     def __str__(self) -> str:
         return str(self._value)
 

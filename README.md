@@ -7,7 +7,7 @@ Una colección de clases base para implementar Objetos de Valor (Value Objects) 
 - Clases base para Objetos de Valor de tipos primitivos (`String`, `Int`, `Float`, `Bool`).
 - Soporte para valores numéricos positivos (`PositiveInt`, `PositiveFloat`).
 - Soporte para tipos de datos temporales (`DateTime`, `Date`).
-- Soporte para `UuidValueObject`, `EmailValueObject`, `PhoneNumberValueObject`, `CountryCodeValueObject`, `UrlValueObject` e `IpAddressValueObject`.
+- Soporte para `UuidValueObject`, `EmailValueObject`, `PhoneNumberValueObject`, `CountryCodeValueObject`, `UrlValueObject`, `IpAddressValueObject` e `EnumValueObject`.
 - Objeto compuesto `MoneyValueObject` (cantidad + moneda ISO 4217).
 - Clase base para `Entity` con identificación basada en UUID.
 - Tipado fuerte y validación de nulidad por defecto.
@@ -92,6 +92,25 @@ user1 = User("550e8400-e29b-41d4-a716-446655440000", "Alice")
 user2 = User("550e8400-e29b-41d4-a716-446655440000", "Alice Smith")
 
 print(user1.equals(user2)) # True (misma identidad)
+```
+
+### Enum Value Object
+
+Para restringir valores a un conjunto predefinido:
+
+```python
+from enum import Enum
+from ddd_value_objects import EnumValueObject
+
+class Color(Enum):
+    RED = "red"
+    BLUE = "blue"
+
+class ColorValueObject(EnumValueObject):
+    def __init__(self, value: str):
+        super().__init__(value, [c.value for c in Color])
+
+color = ColorValueObject("red")
 ```
 
 ## Desarrollo

@@ -51,16 +51,16 @@ Combine multiple values into a single domain concept (e.g., `Money` which consis
 You can extend base classes to create domain-specific types:
 
 ```python
-from ddd_value_objects import StringValueObject, IntValueObject, InvalidArgumentError
+from ddd_value_objects import StringValueObject, PositiveIntValueObject, InvalidArgumentError
 
 class UserName(StringValueObject):
     pass
 
-class UserAge(IntValueObject):
+class UserAge(PositiveIntValueObject):
     def __init__(self, value: int):
         super().__init__(value)
-        if value < 0 or value > 150:
-            raise InvalidArgumentError(f"Age {value} is out of valid range (0-150)")
+        if value > 150:
+            raise InvalidArgumentError(f"Age {value} is out of valid range (max 150)")
 
 # Usage
 name1 = UserName("Alice")

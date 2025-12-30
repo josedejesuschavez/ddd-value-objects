@@ -4,6 +4,7 @@ A comprehensive collection of base classes and specialized types for implementin
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg)](https://github.com/youruser/ddd-value-objects)
 
 ## Key Features
 
@@ -196,6 +197,10 @@ uv sync
 ```bash
 uv run pytest
 ```
+
+### Coverage Threshold
+
+This project maintains a minimum coverage threshold of **90%**. The CI workflow will automatically fail if coverage falls below this level.
 
 ## License
 

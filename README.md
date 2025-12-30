@@ -109,11 +109,11 @@ print(total.currency) # "USD"
 
 ### 4. Enum Value Objects
 
-Restrict values to a specific set:
+Restrict values to a specific set using an `Enum`:
 
 ```python
 from enum import Enum
-from ddd_value_objects import EnumValueObject
+from ddd_value_objects import EnumValueObject, StringValueObject, InvalidArgumentError
 
 class UserRole(Enum):
     ADMIN = "admin"
@@ -121,13 +121,23 @@ class UserRole(Enum):
 
 class RoleValueObject(EnumValueObject):
     def __init__(self, value: str):
-        # Pass the value and a list of valid ValueObjects
+        # Define the valid options
+        valid_roles = [StringValueObject(r.value) for r in UserRole]
+        
+        # Pass the current value as a ValueObject and the list of valid options
         super().__init__(
             StringValueObject(value), 
-            [StringValueObject(r.value) for r in UserRole]
+            valid_roles
         )
 
-role = RoleValueObject("admin")
+# Usage
+try:
+    role = RoleValueObject("admin")
+    print(role.value)  # "admin"
+    
+    invalid_role = RoleValueObject("guest") # Raises InvalidArgumentError
+except InvalidArgumentError as e:
+    print(e)
 ```
 
 ### 5. Entities

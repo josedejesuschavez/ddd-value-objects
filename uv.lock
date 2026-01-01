@@ -117,7 +117,7 @@ toml = [
 
 [[package]]
 name = "ddd-value-objects"
-version = "0.1.5.1"
+version = "0.1.6"
 source = { editable = "." }
 
 [package.dev-dependencies]

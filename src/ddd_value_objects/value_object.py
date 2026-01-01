@@ -9,8 +9,19 @@ Primitives = TypeVar('Primitives', int, str, float, bool)
 
 class ValueObject(ABC, Generic[Primitives]):
     def __init__(self, value: Primitives):
-        self._value = value
+        object.__setattr__(self, '_value', value)
         self._ensure_value_is_defined(value)
+        object.__setattr__(self, '_initialized', True)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if getattr(self, '_initialized', False):
+            raise TypeError(f"{self.__class__.__name__} is immutable")
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name: str) -> None:
+        if getattr(self, '_initialized', False):
+            raise TypeError(f"{self.__class__.__name__} is immutable")
+        object.__delattr__(self, name)
 
     def equals(self, other: 'ValueObject[Primitives]') -> bool:
         return other.__class__ == self.__class__ and other.value == self._value

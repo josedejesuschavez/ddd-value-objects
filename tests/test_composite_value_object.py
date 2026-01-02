@@ -41,3 +41,20 @@ def test_composite_value_object_hash():
     assert hash(vo1) == hash(vo2)
     assert hash(vo1) == hash(vo3)
     assert hash(vo1) != hash(vo4)
+
+def test_composite_value_object_immutability():
+    vo = MockCompositeValueObject({'a': 1})
+    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
+        vo.a = 2
+    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
+        del vo._value
+
+def test_composite_value_object_not_initialized():
+    class UninitializedComposite(CompositeValueObject[dict]):
+        def __init__(self, value: dict):
+            pass
+            
+    vo = UninitializedComposite({'a': 1})
+    vo.any_attr = 100
+    assert vo.any_attr == 100
+    del vo.any_attr

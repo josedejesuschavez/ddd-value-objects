@@ -4,7 +4,6 @@ from .invalid_argument_error import InvalidArgumentError
 
 
 class CurrencyValueObject(StringValueObject):
-    # Código ISO 4217: 3 letras mayúsculas
     CURRENCY_REGEX = re.compile(r"^[A-Z]{3}$")
 
     def __init__(self, value: str):

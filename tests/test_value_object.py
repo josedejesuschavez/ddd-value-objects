@@ -30,7 +30,6 @@ def test_value_object_equality():
     assert vo1.equals(vo2)
     assert not vo1.equals(vo3)
     
-    # Test __eq__
     assert vo1 == vo2
     assert vo1 != vo3
     assert vo1 != "not a value object"

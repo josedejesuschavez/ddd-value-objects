@@ -26,7 +26,6 @@ def test_composite_value_object_equality():
     assert vo1 != vo3
     assert vo1 != "not a vo"
     
-    # Test different classes
     class AnotherComposite(CompositeValueObject[dict]):
         pass
     vo4 = AnotherComposite({'a': 1})
@@ -36,9 +35,26 @@ def test_composite_value_object_equality():
 def test_composite_value_object_hash():
     vo1 = MockCompositeValueObject({'a': 1, 'b': 2})
     vo2 = MockCompositeValueObject({'a': 1, 'b': 2})
-    vo3 = MockCompositeValueObject({'b': 2, 'a': 1}) # Same content, different order
+    vo3 = MockCompositeValueObject({'b': 2, 'a': 1})
     vo4 = MockCompositeValueObject({'a': 1})
     
     assert hash(vo1) == hash(vo2)
     assert hash(vo1) == hash(vo3)
     assert hash(vo1) != hash(vo4)
+
+def test_composite_value_object_immutability():
+    vo = MockCompositeValueObject({'a': 1})
+    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
+        vo.a = 2
+    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
+        del vo._value
+
+def test_composite_value_object_not_initialized():
+    class UninitializedComposite(CompositeValueObject[dict]):
+        def __init__(self, value: dict):
+            pass
+            
+    vo = UninitializedComposite({'a': 1})
+    vo.any_attr = 100
+    assert vo.any_attr == 100
+    del vo.any_attr

@@ -7,8 +7,6 @@ T = TypeVar('T', bound=dict)
 
 class CompositeValueObject(ABC, Generic[T]):
     def __init__(self, value: T):
-        # Convert dictionary to a more immutable form if possible, 
-        # but at least prevent reassignment of _value
         self._ensure_value_is_defined(value)
         object.__setattr__(self, '_value', dict(value))
         object.__setattr__(self, '_initialized', True)
@@ -25,7 +23,6 @@ class CompositeValueObject(ABC, Generic[T]):
 
     @property
     def value(self) -> T:
-        # Return a copy to prevent mutation of the internal dictionary
         return dict(self._value)
 
     def equals(self, other: 'CompositeValueObject[T]') -> bool:
@@ -37,8 +34,6 @@ class CompositeValueObject(ABC, Generic[T]):
         return self.equals(other)
 
     def __hash__(self) -> int:
-        # Los diccionarios no son hasheables, así que convertimos a items ordenados si es posible
-        # o usamos una representación inmutable para el hash.
         return hash((self.__class__, tuple(sorted(self._value.items()))))
 
     def __str__(self) -> str:

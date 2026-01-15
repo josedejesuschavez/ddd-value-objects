@@ -19,7 +19,6 @@ from .url_value_object import UrlValueObject
 from .ip_address_value_object import IpAddressValueObject
 from .enum_value_object import EnumValueObject
 from .money_value_object import MoneyValueObject
-from .entity import Entity
 from .invalid_argument_error import InvalidArgumentError
 
 __all__ = [
@@ -44,6 +43,5 @@ __all__ = [
     "IpAddressValueObject",
     "EnumValueObject",
     "MoneyValueObject",
-    "Entity",
     "InvalidArgumentError",
 ]

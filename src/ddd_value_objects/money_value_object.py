@@ -1,13 +1,14 @@
+from decimal import Decimal
 from .composite_value_object import CompositeValueObject
-from .positive_float_value_object import PositiveFloatValueObject
+from .positive_decimal_value_object import PositiveDecimalValueObject
 from .currency_value_object import CurrencyValueObject
 from .invalid_argument_error import InvalidArgumentError
 
 
 class MoneyValueObject(CompositeValueObject[dict]):
 
-    def __init__(self, amount: float, currency: str):
-        self._amount_vo = PositiveFloatValueObject(amount)
+    def __init__(self, amount: Decimal, currency: str):
+        self._amount_vo = PositiveDecimalValueObject(amount)
         self._currency_vo = CurrencyValueObject(currency)
         super().__init__({
             'amount': self._amount_vo.value,
@@ -15,7 +16,7 @@ class MoneyValueObject(CompositeValueObject[dict]):
         })
 
     @property
-    def amount(self) -> float:
+    def amount(self) -> Decimal:
         return self._amount_vo.value
 
     @property

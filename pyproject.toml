@@ -1,6 +1,6 @@
 [project]
 name = "ddd-value-objects"
-version = "0.1.7"
+version = "0.1.7.1"
 description = "A collection of base classes for Domain-Driven Design (DDD) value objects and entities in Python"
 readme = "README.md"
 license = {text = "MIT"}

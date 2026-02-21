@@ -1,15 +1,12 @@
+from dataclasses import dataclass
+
 from .value_object import ValueObject
 
 
+@dataclass(frozen=True, slots=True)
 class BoolValueObject(ValueObject[bool]):
+    def __post_init__(self):
+        super().__post_init__()
 
-    def __init__(self, value: bool):
-        super().__init__(value)
-
-    def equals(self, other: 'ValueObject') -> bool:
-        if not isinstance(other, BoolValueObject):
-            return False
-        return self.value == other.value
-
-    def __repr__(self):
-        return f"BoolValueObject(value={self.value})"
+        if not isinstance(self.value, bool):
+            raise TypeError(f"Value must be a boolean, got {type(self.value)}")

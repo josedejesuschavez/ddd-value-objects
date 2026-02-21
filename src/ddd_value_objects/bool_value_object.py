@@ -7,6 +7,9 @@ from .value_object import ValueObject
 class BoolValueObject(ValueObject[bool]):
     def __post_init__(self):
         super().__post_init__()
+        self._ensure_value_is_bool(self.value)
 
-        if not isinstance(self.value, bool):
-            raise TypeError(f"Value must be a boolean, got {type(self.value)}")
+    @staticmethod
+    def _ensure_value_is_bool(value: bool) -> None:
+        if not isinstance(value, bool):
+            raise TypeError(f"Value must be a boolean, got {type(value)}")

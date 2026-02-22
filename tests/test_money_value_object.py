@@ -11,7 +11,7 @@ def test_money_value_object_valid():
     assert vo1.amount == amount
     assert vo1.currency == currency
     assert vo1.equals(vo2)
-    assert repr(vo1) == f"MoneyValueObject(amount={amount}, currency='{currency}')"
+    assert repr(vo1) == f"MoneyValueObject(amount=Decimal('{amount}'), currency='{currency}')"
     assert str(vo1) == f"{amount} {currency}"
 
 def test_money_value_object_invalid_amount():

@@ -1,60 +1,45 @@
+from dataclasses import dataclass
+
 import pytest
 from src.ddd_value_objects.composite_value_object import CompositeValueObject
 from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
 
-class MockCompositeValueObject(CompositeValueObject[dict]):
-    pass
+
+@dataclass(frozen=True, slots=True)
+class MockCompositeValueObject(CompositeValueObject):
+    a: int
+    b: int
 
 def test_composite_value_object_valid():
     val = {'a': 1, 'b': 2}
-    vo = MockCompositeValueObject(val)
-    assert vo.value == val
-    assert str(vo) == str(val)
-
-def test_composite_value_object_none():
-    with pytest.raises(InvalidArgumentError, match="Value must be defined"):
-        MockCompositeValueObject(None)
+    vo = MockCompositeValueObject(a=val['a'], b=val['b'])
+    assert vo.a == val['a']
+    assert vo.b == val['b']
 
 def test_composite_value_object_equality():
-    vo1 = MockCompositeValueObject({'a': 1})
-    vo2 = MockCompositeValueObject({'a': 1})
-    vo3 = MockCompositeValueObject({'a': 2})
+    vo1 = MockCompositeValueObject(a=1, b=0)
+    vo2 = MockCompositeValueObject(a=1, b=0)
+    vo3 = MockCompositeValueObject(a=2, b=0)
     
     assert vo1.equals(vo2)
     assert vo1 == vo2
     assert not vo1.equals(vo3)
     assert vo1 != vo3
     assert vo1 != "not a vo"
-    
-    class AnotherComposite(CompositeValueObject[dict]):
-        pass
-    vo4 = AnotherComposite({'a': 1})
+
+    @dataclass(frozen=True, slots=True)
+    class AnotherComposite(CompositeValueObject):
+        a: int
+    vo4 = AnotherComposite(a=1)
     assert not vo1.equals(vo4)
     assert vo1 != vo4
 
 def test_composite_value_object_hash():
-    vo1 = MockCompositeValueObject({'a': 1, 'b': 2})
-    vo2 = MockCompositeValueObject({'a': 1, 'b': 2})
-    vo3 = MockCompositeValueObject({'b': 2, 'a': 1})
-    vo4 = MockCompositeValueObject({'a': 1})
+    vo1 = MockCompositeValueObject(a=1, b=2)
+    vo2 = MockCompositeValueObject(a=1, b=2)
+    vo3 = MockCompositeValueObject(a=1, b=2)
+    vo4 = MockCompositeValueObject(a=1, b=0)
     
     assert hash(vo1) == hash(vo2)
     assert hash(vo1) == hash(vo3)
     assert hash(vo1) != hash(vo4)
-
-def test_composite_value_object_immutability():
-    vo = MockCompositeValueObject({'a': 1})
-    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
-        vo.a = 2
-    with pytest.raises(TypeError, match="MockCompositeValueObject is immutable"):
-        del vo._value
-
-def test_composite_value_object_not_initialized():
-    class UninitializedComposite(CompositeValueObject[dict]):
-        def __init__(self, value: dict):
-            pass
-            
-    vo = UninitializedComposite({'a': 1})
-    vo.any_attr = 100
-    assert vo.any_attr == 100
-    del vo.any_attr

@@ -43,3 +43,9 @@ def test_composite_value_object_hash():
     assert hash(vo1) == hash(vo2)
     assert hash(vo1) == hash(vo3)
     assert hash(vo1) != hash(vo4)
+
+def test_composite_value_object_field_none():
+    with pytest.raises(InvalidArgumentError, match=r"a must be defined"):
+        MockCompositeValueObject(a=None, b=2)
+    with pytest.raises(InvalidArgumentError, match=r"b must be defined"):
+        MockCompositeValueObject(a=1, b=None)

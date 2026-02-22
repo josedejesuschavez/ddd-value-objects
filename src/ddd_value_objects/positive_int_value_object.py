@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from .int_value_object import IntValueObject
-from .invalid_argument_error import InvalidArgumentError
 
 
 @dataclass(frozen=True, slots=True)

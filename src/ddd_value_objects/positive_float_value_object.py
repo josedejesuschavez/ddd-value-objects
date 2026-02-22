@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from .float_value_object import FloatValueObject
-from .invalid_argument_error import InvalidArgumentError
 
 
 @dataclass(frozen=True, slots=True)

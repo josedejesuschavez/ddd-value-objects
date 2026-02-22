@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
+
 from .decimal_value_object import DecimalValueObject
-from .invalid_argument_error import InvalidArgumentError
 
 
 @dataclass(frozen=True, slots=True)

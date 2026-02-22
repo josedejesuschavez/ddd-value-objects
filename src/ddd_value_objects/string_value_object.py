@@ -1,3 +1,4 @@
+from typing import Any
 from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
@@ -10,7 +11,11 @@ class StringValueObject(ValueObject[str]):
         super().__post_init__()
         self._ensure_value_is_string(self.value)
 
-    @staticmethod
-    def _ensure_value_is_string(value) -> None:
+    def _ensure_value_is_string(self, value: str) -> None:
         if not isinstance(value, str):
-            raise InvalidArgumentError(f"Value must be a string, got {type(value)}")
+            raise InvalidArgumentError(
+                self.get_invalid_type_error_message(value)
+            )
+
+    def get_invalid_type_error_message(self, value: Any) -> str:
+        return f"Value must be a string, got {type(value)}"

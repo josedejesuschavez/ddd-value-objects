@@ -10,7 +10,9 @@ class PositiveFloatValueObject(FloatValueObject):
         super().__post_init__()
         self._ensure_is_positive(self.value)
 
-    @staticmethod
-    def _ensure_is_positive(value: float) -> None:
+    def _ensure_is_positive(self, value: float) -> None:
         if value < 0:
-            raise InvalidArgumentError(f"'{value}' is not a positive float")
+            raise InvalidArgumentError(self.get_not_positive_error_message(value))
+
+    def get_not_positive_error_message(self, value: float) -> str:
+        return f"'{value}' is not a positive float"

@@ -11,9 +11,11 @@ class UuidValueObject(ValueObject[str]):
         super().__post_init__()
         self._ensure_validate_is_uuid(self.value)
 
-    @staticmethod
-    def _ensure_validate_is_uuid(value: str):
+    def _ensure_validate_is_uuid(self, value: str):
         try:
             uuid.UUID(value)
         except ValueError:
-            raise InvalidArgumentError(message=f"'{value}' is not a valid UUID.")
+            raise InvalidArgumentError(message=self.get_invalid_uuid_error_message(value))
+
+    def get_invalid_uuid_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid UUID."

@@ -23,7 +23,9 @@ class PhoneNumberValueObject(StringValueObject):
             return value
         return re.sub(r"[\s\-\(\)]", "", value)
 
-    @staticmethod
-    def _ensure_is_valid_phone(value: str) -> None:
+    def _ensure_is_valid_phone(self, value: str) -> None:
         if not PhoneNumberValueObject.PHONE_REGEX.match(value):
-            raise InvalidArgumentError(f"'{value}' is not a valid phone number")
+            raise InvalidArgumentError(self.get_invalid_phone_error_message(value))
+
+    def get_invalid_phone_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid phone number"

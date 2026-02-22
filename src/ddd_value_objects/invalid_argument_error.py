@@ -6,6 +6,8 @@ class InvalidArgumentError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
+        if not self.params:
+            return self.message
         return f"{self.message} {self.params}"
 
     def __repr__(self):

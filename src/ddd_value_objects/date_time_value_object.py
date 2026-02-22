@@ -10,9 +10,11 @@ class DateTimeValueObject(ValueObject[int]):
         super().__post_init__()
         self._ensure_is_valid_timestamp(self.value)
 
-    @staticmethod
-    def _ensure_is_valid_timestamp(value: int) -> None:
+    def _ensure_is_valid_timestamp(self, value: int) -> None:
         try:
             datetime.fromtimestamp(value)
         except (ValueError, OSError, OverflowError):
-            raise InvalidArgumentError(f"'{value}' is not a valid Unix timestamp")
+            raise InvalidArgumentError(self.get_invalid_timestamp_error_message(value))
+
+    def get_invalid_timestamp_error_message(self, value: int) -> str:
+        return f"'{value}' is not a valid Unix timestamp"

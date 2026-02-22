@@ -1,3 +1,4 @@
+from typing import Any
 from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
@@ -10,7 +11,11 @@ class BoolValueObject(ValueObject[bool]):
         super().__post_init__()
         self._ensure_value_is_bool(self.value)
 
-    @staticmethod
-    def _ensure_value_is_bool(value: bool) -> None:
+    def _ensure_value_is_bool(self, value: bool) -> None:
         if not isinstance(value, bool):
-            raise InvalidArgumentError(f"Value must be a boolean, got {type(value)}")
+            raise InvalidArgumentError(
+                self.get_invalid_type_error_message(value)
+            )
+
+    def get_invalid_type_error_message(self, value: Any) -> str:
+        return f"Value must be a boolean, got {type(value)}"

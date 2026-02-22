@@ -19,7 +19,9 @@ class UrlValueObject(StringValueObject):
         super().__post_init__()
         self._ensure_is_valid_url(self.value)
 
-    @staticmethod
-    def _ensure_is_valid_url(value: str) -> None:
+    def _ensure_is_valid_url(self, value: str) -> None:
         if not UrlValueObject.URL_REGEX.match(value):
-            raise InvalidArgumentError(f"'{value}' is not a valid URL")
+            raise InvalidArgumentError(self.get_invalid_url_error_message(value))
+
+    def get_invalid_url_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid URL"

@@ -74,3 +74,11 @@ def test_bool_value_object_invalid_type():
 def test_decimal_value_object_invalid_type():
     with pytest.raises(InvalidArgumentError, match=r"Value must be a decimal"):
         DecimalValueObject(10.5)
+
+def test_custom_error_message():
+    class FirstName(StringValueObject):
+        def get_invalid_type_error_message(self, value):
+            return f"Custom error for {value}"
+    
+    with pytest.raises(InvalidArgumentError, match=r"Custom error for 123"):
+        FirstName(123)

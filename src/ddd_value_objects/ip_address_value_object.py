@@ -11,9 +11,11 @@ class IpAddressValueObject(StringValueObject):
         super().__post_init__()
         self._ensure_is_valid_ip(self.value)
 
-    @staticmethod
-    def _ensure_is_valid_ip(value: str) -> None:
+    def _ensure_is_valid_ip(self, value: str) -> None:
         try:
             ipaddress.ip_address(value)
         except ValueError:
-            raise InvalidArgumentError(f"'{value}' is not a valid IP address")
+            raise InvalidArgumentError(self.get_invalid_ip_error_message(value))
+
+    def get_invalid_ip_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid IP address"

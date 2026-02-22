@@ -13,7 +13,9 @@ class EmailValueObject(StringValueObject):
         super().__post_init__()
         self._ensure_is_valid_email(self.value)
 
-    @staticmethod
-    def _ensure_is_valid_email(value: str) -> None:
+    def _ensure_is_valid_email(self, value: str) -> None:
         if not EmailValueObject.EMAIL_REGEX.match(value):
-            raise InvalidArgumentError(f"'{value}' is not a valid email address")
+            raise InvalidArgumentError(self.get_invalid_email_error_message(value))
+
+    def get_invalid_email_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid email address"

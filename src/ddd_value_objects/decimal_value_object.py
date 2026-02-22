@@ -1,3 +1,4 @@
+from typing import Any
 from dataclasses import dataclass
 from decimal import Decimal
 
@@ -11,7 +12,11 @@ class DecimalValueObject(ValueObject[Decimal]):
         super().__post_init__()
         self._ensure_value_is_decimal(self.value)
 
-    @staticmethod
-    def _ensure_value_is_decimal(value) -> None:
+    def _ensure_value_is_decimal(self, value: Decimal) -> None:
         if not isinstance(value, Decimal):
-            raise InvalidArgumentError(f"Value must be a decimal, got {type(value)}")
+            raise InvalidArgumentError(
+                self.get_invalid_type_error_message(value)
+            )
+
+    def get_invalid_type_error_message(self, value: Any) -> str:
+        return f"Value must be a decimal, got {type(value)}"

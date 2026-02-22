@@ -13,7 +13,9 @@ class CurrencyValueObject(StringValueObject):
         super().__post_init__()
         self._ensure_is_valid_currency(self.value)
 
-    @staticmethod
-    def _ensure_is_valid_currency(value: str) -> None:
+    def _ensure_is_valid_currency(self, value: str) -> None:
         if not CurrencyValueObject.CURRENCY_REGEX.match(value):
-            raise InvalidArgumentError(f"'{value}' is not a valid ISO 4217 currency code")
+            raise InvalidArgumentError(self.get_invalid_currency_error_message(value))
+
+    def get_invalid_currency_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid ISO 4217 currency code"

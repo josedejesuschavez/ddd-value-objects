@@ -6,13 +6,8 @@ from .invalid_argument_error import InvalidArgumentError
 
 @dataclass(frozen=True, slots=True)
 class PositiveIntValueObject(IntValueObject):
-    def __post_init__(self):
-        super().__post_init__()
-        self._ensure_is_positive(self.value)
+    def min_value(self) -> int | None:
+        return 0
 
-    def _ensure_is_positive(self, value: int) -> None:
-        if value < 0:
-            raise InvalidArgumentError(self.get_not_positive_error_message(value))
-
-    def get_not_positive_error_message(self, value: int) -> str:
+    def get_too_low_error_message(self, value: int, min_value: int) -> str:
         return f"'{value}' is not a positive integer"

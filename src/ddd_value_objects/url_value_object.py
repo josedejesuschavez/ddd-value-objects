@@ -1,9 +1,11 @@
 import re
+from dataclasses import dataclass
 
 from .string_value_object import StringValueObject
 from .invalid_argument_error import InvalidArgumentError
 
 
+@dataclass(frozen=True, slots=True)
 class UrlValueObject(StringValueObject):
     URL_REGEX = re.compile(
         r'^(?:http|ftp)s?://'
@@ -13,13 +15,13 @@ class UrlValueObject(StringValueObject):
         r'(?::\d+)?'
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
-    def __init__(self, value: str):
-        super().__init__(value)
-        self._ensure_is_valid_url(value)
+    def __post_init__(self):
+        super().__post_init__()
+        self._ensure_is_valid_url(self.value)
 
     def _ensure_is_valid_url(self, value: str) -> None:
-        if not self.URL_REGEX.match(value):
-            raise InvalidArgumentError(f"'{value}' is not a valid URL")
+        if not UrlValueObject.URL_REGEX.match(value):
+            raise InvalidArgumentError(self.get_invalid_url_error_message(value))
 
-    def __repr__(self):
-        return f"UrlValueObject(value='{self.value}')"
+    def get_invalid_url_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid URL"

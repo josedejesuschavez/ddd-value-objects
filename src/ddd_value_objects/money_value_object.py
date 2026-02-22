@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from decimal import Decimal
 from .composite_value_object import CompositeValueObject
 from .positive_decimal_value_object import PositiveDecimalValueObject
@@ -5,37 +6,20 @@ from .currency_value_object import CurrencyValueObject
 from .invalid_argument_error import InvalidArgumentError
 
 
-class MoneyValueObject(CompositeValueObject[dict]):
+@dataclass(frozen=True, slots=True)
+class MoneyValueObject(CompositeValueObject):
+    amount: Decimal
+    currency: str
 
-    def __init__(self, amount: Decimal, currency: str):
-        self._amount_vo = PositiveDecimalValueObject(amount)
-        self._currency_vo = CurrencyValueObject(currency)
-        super().__init__({
-            'amount': self._amount_vo.value,
-            'currency': self._currency_vo.value
-        })
-
-    @property
-    def amount(self) -> Decimal:
-        return self._amount_vo.value
-
-    @property
-    def currency(self) -> str:
-        return self._currency_vo.value
+    def __post_init__(self):
+        super().__post_init__()
+        PositiveDecimalValueObject(self.amount)
+        CurrencyValueObject(self.currency)
 
     def add(self, other: 'MoneyValueObject') -> 'MoneyValueObject':
         if self.currency != other.currency:
             raise InvalidArgumentError("Cannot add money with different currencies")
         return MoneyValueObject(self.amount + other.amount, self.currency)
-
-    def equals(self, other: 'CompositeValueObject') -> bool:
-        if not isinstance(other, MoneyValueObject):
-            return False
-        return (self.amount == other.amount and 
-                self.currency == other.currency)
-
-    def __repr__(self):
-        return f"MoneyValueObject(amount={self.amount}, currency='{self.currency}')"
 
     def __str__(self):
         return f"{self.amount} {self.currency}"

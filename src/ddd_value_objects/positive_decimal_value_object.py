@@ -1,17 +1,13 @@
+from dataclasses import dataclass
 from decimal import Decimal
+
 from .decimal_value_object import DecimalValueObject
-from .invalid_argument_error import InvalidArgumentError
 
 
+@dataclass(frozen=True, slots=True)
 class PositiveDecimalValueObject(DecimalValueObject):
+    def min_value(self) -> Decimal | None:
+        return Decimal("0")
 
-    def __init__(self, value: Decimal):
-        super().__init__(value)
-        self._ensure_is_positive(value)
-
-    def _ensure_is_positive(self, value: Decimal) -> None:
-        if value < 0:
-            raise InvalidArgumentError(f"'{value}' is not a positive decimal")
-
-    def __repr__(self):
-        return f"PositiveDecimalValueObject(value={self.value})"
+    def get_too_low_error_message(self, value: Decimal, min_value: Decimal) -> str:
+        return f"'{value}' is not a positive decimal"

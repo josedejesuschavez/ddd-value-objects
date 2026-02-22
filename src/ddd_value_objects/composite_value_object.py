@@ -1,45 +1,25 @@
-from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional, Any
+from abc import ABC
+from dataclasses import dataclass, fields
+from typing import Any
 
 from .invalid_argument_error import InvalidArgumentError
 
-T = TypeVar('T', bound=dict)
 
-class CompositeValueObject(ABC, Generic[T]):
-    def __init__(self, value: T):
-        self._ensure_value_is_defined(value)
-        object.__setattr__(self, '_value', dict(value))
-        object.__setattr__(self, '_initialized', True)
+@dataclass(frozen=True, slots=True)
+class CompositeValueObject(ABC):
+    def __post_init__(self):
+        for field in fields(self):
+            field_name = field.name
+            value = getattr(self, field_name)
+            self._ensure_value_is_defined(value, field_name)
 
-    def __setattr__(self, name: str, value: Any) -> None:
-        if getattr(self, '_initialized', False):
-            raise TypeError(f"{self.__class__.__name__} is immutable")
-        object.__setattr__(self, name, value)
-
-    def __delattr__(self, name: str) -> None:
-        if getattr(self, '_initialized', False):
-            raise TypeError(f"{self.__class__.__name__} is immutable")
-        object.__delattr__(self, name)
-
-    @property
-    def value(self) -> T:
-        return dict(self._value)
-
-    def equals(self, other: 'CompositeValueObject[T]') -> bool:
-        return other.__class__ == self.__class__ and other.value == self._value
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, CompositeValueObject):
+    def equals(self, other: Any) -> bool:
+        if other is None or other.__class__ != self.__class__:
             return False
-        return self.equals(other)
+        return self == other
 
-    def __hash__(self) -> int:
-        return hash((self.__class__, tuple(sorted(self._value.items()))))
-
-    def __str__(self) -> str:
-        return str(self._value)
-
-    def _ensure_value_is_defined(self, value: Optional[T]) -> None:
+    @staticmethod
+    def _ensure_value_is_defined(value: Any, field_name: str = "Value") -> None:
         if value is None:
-            raise InvalidArgumentError("Value must be defined")
+            raise InvalidArgumentError(f"{field_name} must be defined")
 

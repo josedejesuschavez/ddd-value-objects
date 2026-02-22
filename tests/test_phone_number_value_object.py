@@ -46,5 +46,5 @@ def test_phone_number_value_object_repr():
     assert repr(vo) == "PhoneNumberValueObject(value='+34600000000')"
 
 def test_phone_number_value_object_clean_non_string():
-    with pytest.raises(TypeError):
+    with pytest.raises(InvalidArgumentError):
         PhoneNumberValueObject(123456789)

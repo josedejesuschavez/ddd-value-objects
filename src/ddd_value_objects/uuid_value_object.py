@@ -1,25 +1,21 @@
 import uuid
+from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
 from .value_object import ValueObject, Primitives
 
 
+@dataclass(frozen=True, slots=True)
 class UuidValueObject(ValueObject[str]):
+    def __post_init__(self):
+        super().__post_init__()
+        self._ensure_validate_is_uuid(self.value)
 
-    def __init__(self, value):
-        super().__init__(value)
-        self.validate_is_uuid()
-
-    def validate_is_uuid(self):
+    def _ensure_validate_is_uuid(self, value: str):
         try:
-            uuid_obj = uuid.UUID(self.value)
+            uuid.UUID(value)
         except ValueError:
-            raise InvalidArgumentError(message=f"'{self.value}' is not a valid UUID.")
+            raise InvalidArgumentError(message=self.get_invalid_uuid_error_message(value))
 
-    def equals(self, other: 'ValueObject[Primitives]') -> bool:
-        if not isinstance(other, UuidValueObject):
-            return False
-        return self.value == other.value
-
-    def __repr__(self):
-        return f"UuidValueObject(value='{self.value}')"
+    def get_invalid_uuid_error_message(self, value: str) -> str:
+        return f"'{value}' is not a valid UUID."

@@ -6,6 +6,7 @@ from .invalid_argument_error import InvalidArgumentError
 from .value_object import ValueObject
 
 
+
 @dataclass(frozen=True, slots=True)
 class StringValueObject(ValueObject[str]):
     def __post_init__(self):

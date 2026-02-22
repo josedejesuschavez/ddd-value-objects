@@ -10,6 +10,8 @@ class StringValueObject(ValueObject[str]):
     def __post_init__(self):
         super().__post_init__()
         self._ensure_value_is_string(self.value)
+        self._ensure_min_length(self.value)
+        self._ensure_max_length(self.value)
 
     def _ensure_value_is_string(self, value: str) -> None:
         if not isinstance(value, str):
@@ -17,5 +19,31 @@ class StringValueObject(ValueObject[str]):
                 self.get_invalid_type_error_message(value)
             )
 
+    def _ensure_min_length(self, value: str) -> None:
+        min_length = self.min_length()
+        if min_length is not None and len(value) < min_length:
+            raise InvalidArgumentError(
+                self.get_too_short_error_message(value, min_length)
+            )
+
+    def _ensure_max_length(self, value: str) -> None:
+        max_length = self.max_length()
+        if max_length is not None and len(value) > max_length:
+            raise InvalidArgumentError(
+                self.get_too_long_error_message(value, max_length)
+            )
+
+    def min_length(self) -> int | None:
+        return None
+
+    def max_length(self) -> int | None:
+        return None
+
     def get_invalid_type_error_message(self, value: Any) -> str:
         return f"Value must be a string, got {type(value)}"
+
+    def get_too_short_error_message(self, value: str, min_length: int) -> str:
+        return f"Value is too short. Minimum length is {min_length}, but got {len(value)}"
+
+    def get_too_long_error_message(self, value: str, max_length: int) -> str:
+        return f"Value is too long. Maximum length is {max_length}, but got {len(value)}"

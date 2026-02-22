@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from .invalid_argument_error import InvalidArgumentError
 from .value_object import ValueObject
 
 
@@ -12,4 +13,4 @@ class BoolValueObject(ValueObject[bool]):
     @staticmethod
     def _ensure_value_is_bool(value: bool) -> None:
         if not isinstance(value, bool):
-            raise TypeError(f"Value must be a boolean, got {type(value)}")
+            raise InvalidArgumentError(f"Value must be a boolean, got {type(value)}")

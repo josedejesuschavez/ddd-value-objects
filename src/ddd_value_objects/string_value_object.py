@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from .invalid_argument_error import InvalidArgumentError
 from .value_object import ValueObject, Primitives
 
 
@@ -12,4 +13,4 @@ class StringValueObject(ValueObject[str]):
     @staticmethod
     def _ensure_value_is_string(value) -> None:
         if not isinstance(value, str):
-            raise TypeError(f"Value must be a string, got {type(value)}")
+            raise InvalidArgumentError(f"Value must be a string, got {type(value)}")

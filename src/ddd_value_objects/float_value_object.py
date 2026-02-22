@@ -46,5 +46,5 @@ class FloatValueObject(ValueObject[float]):
     def get_too_low_error_message_template(self):
         return "Value is less than minimum required {min_value}"
 
-    def get_too_high_error_message(self):
+    def get_too_high_error_message_template(self):
         return "Value is greater than maximum allowed {max_value}"

@@ -3,7 +3,7 @@ from typing import Any
 from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
-from .value_object import ValueObject, Primitives
+from .value_object import ValueObject
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,3 +63,9 @@ class StringValueObject(ValueObject[str]):
 
     def get_invalid_regex_error_message(self, value: str, pattern: str) -> str:
         return f"Value '{value}' does not match pattern '{pattern}'"
+
+    def get_too_short_error_message_template(self):
+        return "Value is too short. Minimum length is {min_length}"
+
+    def get_too_long_error_message_template(self):
+        return "Value is too long. Maximum length is {max_length}"

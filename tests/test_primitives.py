@@ -1,7 +1,13 @@
-from src.ddd_value_objects.bool_value_object import BoolValueObject
-from src.ddd_value_objects.float_value_object import FloatValueObject
-from src.ddd_value_objects.int_value_object import IntValueObject
-from src.ddd_value_objects.string_value_object import StringValueObject
+import pytest
+
+from ddd_value_objects import (
+    DecimalValueObject,
+    BoolValueObject,
+    FloatValueObject,
+    IntValueObject,
+    StringValueObject,
+    InvalidArgumentError,
+)
 
 
 def test_string_value_object():
@@ -48,3 +54,23 @@ def test_bool_value_object():
     assert not vo1.equals(vo3)
     assert not vo1.equals(vo4)
     assert repr(vo1) == "BoolValueObject(value=True)"
+
+def test_string_value_object_invalid_type():
+    with pytest.raises(InvalidArgumentError, match=r"Value must be a string"):
+        StringValueObject(123)
+
+def test_int_value_object_invalid_type():
+    with pytest.raises(InvalidArgumentError, match=r"Value must be a integer"):
+        IntValueObject('10')
+
+def test_float_value_object_invalid_type():
+    with pytest.raises(InvalidArgumentError, match=r"Value must be a float"):
+        FloatValueObject(10)
+
+def test_bool_value_object_invalid_type():
+    with pytest.raises(InvalidArgumentError, match=r"Value must be a boolean"):
+        BoolValueObject(1)
+
+def test_decimal_value_object_invalid_type():
+    with pytest.raises(InvalidArgumentError, match=r"Value must be a decimal"):
+        DecimalValueObject(10.5)

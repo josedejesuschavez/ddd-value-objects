@@ -34,8 +34,8 @@ def test_positive_decimal_value_object_invalid():
 
 def test_decimal_value_object_repr():
     vo = DecimalValueObject(Decimal("10.5"))
-    assert repr(vo) == "DecimalValueObject(value=10.5)"
+    assert repr(vo) == "DecimalValueObject(value=Decimal('10.5'))"
 
 def test_positive_decimal_value_object_repr():
     vo = PositiveDecimalValueObject(Decimal("20.0"))
-    assert repr(vo) == "PositiveDecimalValueObject(value=20.0)"
+    assert repr(vo) == "PositiveDecimalValueObject(value=Decimal('20.0'))"

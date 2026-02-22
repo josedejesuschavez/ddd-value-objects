@@ -1,17 +1,16 @@
+from dataclasses import dataclass
 from decimal import Decimal
 from .decimal_value_object import DecimalValueObject
 from .invalid_argument_error import InvalidArgumentError
 
 
+@dataclass(frozen=True, slots=True)
 class PositiveDecimalValueObject(DecimalValueObject):
+    def __post_init__(self):
+        super().__post_init__()
+        self._ensure_is_positive(self.value)
 
-    def __init__(self, value: Decimal):
-        super().__init__(value)
-        self._ensure_is_positive(value)
-
-    def _ensure_is_positive(self, value: Decimal) -> None:
+    @staticmethod
+    def _ensure_is_positive(value: Decimal) -> None:
         if value < 0:
             raise InvalidArgumentError(f"'{value}' is not a positive decimal")
-
-    def __repr__(self):
-        return f"PositiveDecimalValueObject(value={self.value})"

@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from decimal import Decimal
 from typing import TypeVar, Generic, Optional, Any
 
 from .invalid_argument_error import InvalidArgumentError
 
 
-Primitives = TypeVar('Primitives', int, str, float, bool)
+Primitives = TypeVar('Primitives', int, str, float, bool, Decimal)
 
 @dataclass(frozen=True, slots=True)
 class ValueObject(ABC, Generic[Primitives]):

@@ -13,7 +13,7 @@ class IntValueObject(ValueObject[int]):
         self._ensure_is_within_range(self.value)
 
     def _ensure_value_is_integer(self, value: int) -> None:
-        if not isinstance(value, int):
+        if isinstance(value, bool) or not isinstance(value, int):
             raise InvalidArgumentError(
                 self.get_invalid_type_error_message(value)
             )

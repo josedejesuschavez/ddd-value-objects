@@ -167,7 +167,7 @@ print(product1 == product2) # True (Same identity/ID)
 | Category | Classes |
 | :--- | :--- |
 | **Primitives** | `StringValueObject`, `IntValueObject`, `FloatValueObject`, `BoolValueObject` |
-| **Numeric** | `PositiveIntValueObject`, `PositiveFloatValueObject` |
+| **Numeric** | `PositiveIntValueObject`, `PositiveFloatValueObject`, `PositiveDecimalValueObject`, `NonNegativeIntValueObject`, `NonNegativeFloatValueObject`, `NonNegativeDecimalValueObject` |
 | **Identity** | `UuidValueObject` |
 | **Network** | `EmailValueObject`, `UrlValueObject`, `IpAddressValueObject` |
 | **Communication** | `PhoneNumberValueObject`, `CountryCodeValueObject` (ISO 3166-1 alpha-2) |

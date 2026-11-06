@@ -56,3 +56,9 @@ def test_custom_length_error_messages():
             
     with pytest.raises(InvalidArgumentError, match="Demasiado corto: 4 < 5"):
         CustomMessageString("1234")
+
+
+def test_string_value_object_error_message_templates():
+    vo = StringValueObject("abc")
+    assert vo.get_too_short_error_message_template() == "Value is too short. Minimum length is {min_length}"
+    assert vo.get_too_long_error_message_template() == "Value is too long. Maximum length is {max_length}"

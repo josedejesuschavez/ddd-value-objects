@@ -11,6 +11,7 @@ class DecimalValueObject(ValueObject[Decimal]):
     def __post_init__(self):
         super().__post_init__()
         self._ensure_value_is_decimal(self.value)
+        self._ensure_is_finite(self.value)
         self._ensure_is_within_range(self.value)
 
     def _ensure_value_is_decimal(self, value: Decimal) -> None:
@@ -18,6 +19,10 @@ class DecimalValueObject(ValueObject[Decimal]):
             raise InvalidArgumentError(
                 self.get_invalid_type_error_message(value)
             )
+
+    def _ensure_is_finite(self, value: Decimal) -> None:
+        if not value.is_finite():
+            raise InvalidArgumentError(self.get_non_finite_error_message(value))
 
     def _ensure_is_within_range(self, value: Decimal) -> None:
         min_value = self.min_value()
@@ -34,6 +39,9 @@ class DecimalValueObject(ValueObject[Decimal]):
 
     def max_value(self) -> Decimal | None:
         return None
+
+    def get_non_finite_error_message(self, value: Decimal) -> str:
+        return f"Value must be finite, got {value}"
 
     def get_invalid_type_error_message(self, value: Any) -> str:
         return f"Value must be a decimal, got {type(value)}"

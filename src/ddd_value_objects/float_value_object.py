@@ -1,4 +1,5 @@
 from typing import Any
+import math
 from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
@@ -10,6 +11,7 @@ class FloatValueObject(ValueObject[float]):
     def __post_init__(self):
         super().__post_init__()
         self._ensure_value_is_float(self.value)
+        self._ensure_is_finite(self.value)
         self._ensure_is_within_range(self.value)
 
     def _ensure_value_is_float(self, value: float) -> None:
@@ -17,6 +19,10 @@ class FloatValueObject(ValueObject[float]):
             raise InvalidArgumentError(
                 self.get_invalid_type_error_message(value)
             )
+
+    def _ensure_is_finite(self, value: float) -> None:
+        if not math.isfinite(value):
+            raise InvalidArgumentError(self.get_non_finite_error_message(value))
 
     def _ensure_is_within_range(self, value: float) -> None:
         min_value = self.min_value()
@@ -33,6 +39,9 @@ class FloatValueObject(ValueObject[float]):
 
     def max_value(self) -> float | None:
         return None
+
+    def get_non_finite_error_message(self, value: float) -> str:
+        return f"Value must be finite, got {value}"
 
     def get_invalid_type_error_message(self, value: Any) -> str:
         return f"Value must be a float, got {type(value)}"

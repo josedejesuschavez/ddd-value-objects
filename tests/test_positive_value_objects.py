@@ -21,9 +21,9 @@ def test_positive_int_value_object_invalid():
     with pytest.raises(InvalidArgumentError, match="is not a positive integer"):
         PositiveIntValueObject(-1)
 
-def test_positive_int_value_object_zero():
-    vo = PositiveIntValueObject(0)
-    assert vo.value == 0
+def test_positive_int_value_object_zero_invalid():
+    with pytest.raises(InvalidArgumentError, match="is not a positive integer"):
+        PositiveIntValueObject(0)
 
 def test_positive_float_value_object():
     vo1 = PositiveFloatValueObject(10.5)
@@ -39,9 +39,9 @@ def test_positive_float_value_object_invalid():
     with pytest.raises(InvalidArgumentError, match="is not a positive float"):
         PositiveFloatValueObject(-1.5)
 
-def test_positive_float_value_object_zero():
-    vo = PositiveFloatValueObject(0.0)
-    assert vo.value == 0.0
+def test_positive_float_value_object_zero_invalid():
+    with pytest.raises(InvalidArgumentError, match="is not a positive float"):
+        PositiveFloatValueObject(0.0)
 
 def test_positive_decimal_value_object():
     vo1 = PositiveDecimalValueObject(Decimal("10.5"))
@@ -51,9 +51,9 @@ def test_positive_decimal_value_object_invalid():
     with pytest.raises(InvalidArgumentError, match="is not a positive decimal"):
         PositiveDecimalValueObject(Decimal("-1.5"))
 
-def test_positive_decimal_value_object_zero():
-    vo = PositiveDecimalValueObject(Decimal("0"))
-    assert vo.value == Decimal("0")
+def test_positive_decimal_value_object_zero_invalid():
+    with pytest.raises(InvalidArgumentError, match="is not a positive decimal"):
+        PositiveDecimalValueObject(Decimal("0"))
 
 def test_positive_int_with_extra_range():
     class RestrictedAge(PositiveIntValueObject):

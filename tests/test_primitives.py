@@ -139,10 +139,10 @@ def test_positive_decimal_value_object_valid():
     assert vo.value == val
 
 
-def test_positive_decimal_value_object_zero():
+def test_positive_decimal_value_object_zero_invalid():
     val = Decimal("0.00")
-    vo = PositiveDecimalValueObject(val)
-    assert vo.value == val
+    with pytest.raises(InvalidArgumentError, match="is not a positive decimal"):
+        PositiveDecimalValueObject(val)
 
 
 def test_positive_decimal_value_object_invalid():
@@ -190,3 +190,40 @@ def test_decimal_value_object_custom_too_high_message():
 
     with pytest.raises(InvalidArgumentError, match='Too high: 15.0 > 10.0'):
         CustomMessageDecimal(Decimal('15.0'))
+
+
+def test_decimal_value_object_rejects_nan():
+    with pytest.raises(InvalidArgumentError, match="Value must be finite"):
+        DecimalValueObject(Decimal("NaN"))
+
+
+def test_decimal_value_object_rejects_infinity():
+    with pytest.raises(InvalidArgumentError, match="Value must be finite"):
+        DecimalValueObject(Decimal("Infinity"))
+
+
+def test_decimal_value_object_rejects_negative_infinity():
+    with pytest.raises(InvalidArgumentError, match="Value must be finite"):
+        DecimalValueObject(Decimal("-Infinity"))
+
+
+def test_decimal_value_object_accepts_finite_values():
+    assert DecimalValueObject(Decimal("1.5")).value == Decimal("1.5")
+    assert DecimalValueObject(Decimal("0")).value == Decimal("0")
+
+
+def test_decimal_value_object_non_finite_error_message():
+    vo = DecimalValueObject(Decimal("1"))
+    assert vo.get_non_finite_error_message(Decimal("NaN")) == "Value must be finite, got NaN"
+
+
+def test_int_value_object_error_message_templates():
+    vo = IntValueObject(1)
+    assert vo.get_too_low_error_message_template() == "Value is less than minimum required {min_value}"
+    assert vo.get_too_high_error_message_template() == "Value is greater than maximum allowed {max_value}"
+
+
+def test_decimal_value_object_error_message_templates():
+    vo = DecimalValueObject(Decimal("1"))
+    assert vo.get_too_low_error_message_template() == "Value is less than minimum required {min_value}"
+    assert vo.get_too_high_error_message_template() == "Value is greater than maximum allowed {max_value}"

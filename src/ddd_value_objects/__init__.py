@@ -11,6 +11,9 @@ from .date_value_object import DateValueObject
 from .positive_int_value_object import PositiveIntValueObject
 from .positive_float_value_object import PositiveFloatValueObject
 from .positive_decimal_value_object import PositiveDecimalValueObject
+from .non_negative_int_value_object import NonNegativeIntValueObject
+from .non_negative_float_value_object import NonNegativeFloatValueObject
+from .non_negative_decimal_value_object import NonNegativeDecimalValueObject
 from .email_value_object import EmailValueObject
 from .phone_number_value_object import PhoneNumberValueObject
 from .currency_value_object import CurrencyValueObject

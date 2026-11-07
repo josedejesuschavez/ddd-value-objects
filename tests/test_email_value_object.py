@@ -25,6 +25,20 @@ def test_email_value_object_invalid():
         with pytest.raises(InvalidArgumentError, match="is not a valid email address"):
             EmailValueObject(email)
 
+def test_email_value_object_normalizes_input():
+    # Surrounding whitespace is stripped and the value is lowercased so the
+    # stored form is canonical: equality, uniqueness and lookups stay
+    # consistent across the system.
+    vo = EmailValueObject("  User@Example.COM  ")
+    assert vo.value == "user@example.com"
+
+
+def test_email_value_object_normalization_runs_before_validation():
+    # Copy-pasted values with stray whitespace must pass validation.
+    vo = EmailValueObject(" user@example.com ")
+    assert vo.value == "user@example.com"
+
+
 def test_email_value_object_complex_valid():
     valid_emails = [
         "email@example.com",

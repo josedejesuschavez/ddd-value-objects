@@ -43,8 +43,8 @@ class IntValueObject(ValueObject[int]):
     def get_too_high_error_message(self, value: int, max_value: int) -> str:
         return f"Value {value} is greater than maximum allowed {max_value}"
 
-    def get_too_low_error_message_template(self):
+    def get_too_low_error_message_template(self) -> str:
         return "Value is less than minimum required {min_value}"
 
-    def get_too_high_error_message_template(self):
+    def get_too_high_error_message_template(self) -> str:
         return "Value is greater than maximum allowed {max_value}"

@@ -2,7 +2,7 @@ import uuid
 from dataclasses import dataclass
 
 from .invalid_argument_error import InvalidArgumentError
-from .value_object import ValueObject, Primitives
+from .value_object import ValueObject
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,16 +1,17 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from datetime import date, datetime
 from decimal import Decimal
 from typing import TypeVar, Generic, Optional, Any
 
 from .invalid_argument_error import InvalidArgumentError
 
 
-Primitives = TypeVar('Primitives', int, str, float, bool, Decimal)
+ValueType = TypeVar('ValueType', int, str, float, bool, Decimal, date, datetime)
 
 @dataclass(frozen=True, slots=True)
-class ValueObject(ABC, Generic[Primitives]):
-    value: Primitives
+class ValueObject(ABC, Generic[ValueType]):
+    value: ValueType
 
     def __post_init__(self):
         self._ensure_value_is_defined(self.value)
@@ -24,6 +25,6 @@ class ValueObject(ABC, Generic[Primitives]):
         return str(self.value)
 
     @staticmethod
-    def _ensure_value_is_defined(value: Optional[Primitives]) -> None:
+    def _ensure_value_is_defined(value: Optional[ValueType]) -> None:
         if value is None:
             raise InvalidArgumentError("Value must be defined")

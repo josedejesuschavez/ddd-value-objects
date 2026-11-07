@@ -64,8 +64,8 @@ class StringValueObject(ValueObject[str]):
     def get_invalid_regex_error_message(self, value: str, pattern: str) -> str:
         return f"Value '{value}' does not match pattern '{pattern}'"
 
-    def get_too_short_error_message_template(self):
+    def get_too_short_error_message_template(self) -> str:
         return "Value is too short. Minimum length is {min_length}"
 
-    def get_too_long_error_message_template(self):
+    def get_too_long_error_message_template(self) -> str:
         return "Value is too long. Maximum length is {max_length}"

@@ -5,7 +5,7 @@ from enum import Enum
 from src.ddd_value_objects import ValueObject, StringValueObject, IntValueObject, FloatValueObject
 from src.ddd_value_objects.enum_value_object import EnumValueObject
 from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
-from src.ddd_value_objects.value_object import Primitives
+from src.ddd_value_objects.value_object import ValueType
 
 
 class Colors(Enum):
@@ -14,7 +14,7 @@ class Colors(Enum):
     GREEN = "green"
 
 class ColorValueObject(EnumValueObject):
-    def __init__(self, value: Primitives):
+    def __init__(self, value: ValueType):
         super().__init__(value, [color.value for color in Colors])
 
 def test_enum_value_object_valid():

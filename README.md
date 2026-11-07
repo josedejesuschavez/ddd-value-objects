@@ -171,7 +171,7 @@ print(product1 == product2) # True (Same identity/ID)
 | **Identity** | `UuidValueObject` |
 | **Network** | `EmailValueObject`, `UrlValueObject`, `IpAddressValueObject` |
 | **Communication** | `PhoneNumberValueObject`, `CountryCodeValueObject` (ISO 3166-1 alpha-2) |
-| **Temporal** | `DateTimeValueObject`, `DateValueObject` (Unix timestamps) |
+| **Temporal** | `DateValueObject` (ISO dates), `DateTimeValueObject` (tz-aware, naive→UTC) |
 | **Financial** | `CurrencyValueObject` (ISO 4217), `MoneyValueObject` |
 | **Others** | `EnumValueObject`, `CompositeValueObject` |
 

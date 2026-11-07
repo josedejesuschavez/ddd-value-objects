@@ -1,4 +1,5 @@
 import pytest
+from datetime import date, datetime, timezone
 
 from src.ddd_value_objects.invalid_argument_error import InvalidArgumentError
 from src.ddd_value_objects.value_object import ValueObject
@@ -42,6 +43,24 @@ def test_value_object_hash():
     
     assert hash(vo1) == hash(vo2)
     assert hash(vo1) != hash(vo3)
+
+def test_value_object_supports_date_and_datetime():
+    # date/datetime joined the ValueType constraint because both are
+    # immutable and hashable, so they satisfy the wrapper contract as-is.
+    class MockDateValueObject(ValueObject[date]):
+        pass
+
+    class MockDateTimeValueObject(ValueObject[datetime]):
+        pass
+
+    vo_date = MockDateValueObject(date(2024, 1, 15))
+    vo_datetime = MockDateTimeValueObject(datetime(2024, 1, 15, 10, 30, tzinfo=timezone.utc))
+
+    assert vo_date.value == date(2024, 1, 15)
+    assert vo_datetime.value == datetime(2024, 1, 15, 10, 30, tzinfo=timezone.utc)
+    assert vo_date == MockDateValueObject(date(2024, 1, 15))
+    assert hash(vo_date) == hash(MockDateValueObject(date(2024, 1, 15)))
+
 
 def test_invalid_argument_error_str_repr():
     err = InvalidArgumentError("Test message", {"param": "value"})

@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import List, Any
 
-from .value_object import ValueObject, Primitives
+from .value_object import ValueObject, ValueType
 from .invalid_argument_error import InvalidArgumentError
 
 
 @dataclass(frozen=True, slots=True)
 class EnumValueObject(ValueObject):
-    def __init__(self, value: Primitives, valid_values: List[Primitives]):
+    def __init__(self, value: ValueType, valid_values: List[ValueType]):
         self._ensure_value_is_valid(value, valid_values)
         super().__init__(value)
 

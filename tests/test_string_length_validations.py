@@ -58,7 +58,14 @@ def test_custom_length_error_messages():
         CustomMessageString("1234")
 
 
-def test_string_value_object_error_message_templates():
-    vo = StringValueObject("abc")
-    assert vo.get_too_short_error_message_template() == "Value is too short. Minimum length is {min_length}"
-    assert vo.get_too_long_error_message_template() == "Value is too long. Maximum length is {max_length}"
+def test_string_value_object_message_templates():
+    # Templates keep placeholders unfilled; consumers rendering
+    # client-side validation messages (e.g. HTML data-msg-* attributes)
+    # format them with their own min/max values.
+    vo = StringValueObject("test")
+    assert vo.get_too_short_error_message_template() == (
+        "Value is too short. Minimum length is {min_length}"
+    )
+    assert vo.get_too_long_error_message_template() == (
+        "Value is too long. Maximum length is {max_length}"
+    )
